@@ -15,6 +15,7 @@ const nodemailer = require("nodemailer");
 
 const usersRouter = require("./routes/users");
 const path = require("path");
+app.use(cors({ origin: "*" }));
 
 mongoose.connect(process.env.DB_URI, {
   useNewUrlParser: true,
@@ -24,7 +25,6 @@ mongoose.connect(process.env.DB_URI, {
 const db = mongoose.connection;
 db.once("open", () => console.log("Connected to DB!"));
 
-app.use(cors());
 app.use(express.json());
 
 app.post("/sendmail", (req, res) => {
