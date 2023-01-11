@@ -5,20 +5,9 @@ const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
 
 router.get("/register", (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Max-Age", "1800");
-  res.setHeader("Access-Control-Allow-Headers", "content-type");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "PUT, POST, GET, DELETE, PATCH, OPTIONS"
-  );
   User.find()
     .then((users) => res.json(users))
     .catch((err) => res.status(400).json("Error: " + err));
-});
-router.post("/register", async (req, res) => {
-  //validation
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Max-Age", "1800");
@@ -27,6 +16,10 @@ router.post("/register", async (req, res) => {
     "Access-Control-Allow-Methods",
     "PUT, POST, GET, DELETE, PATCH, OPTIONS"
   );
+});
+router.post("/register", async (req, res) => {
+  //validation
+
   if (!req.body.name || !req.body.password) {
     return res.status(400).json({ msg: "Please enter all fields" });
   }
@@ -52,8 +45,6 @@ router.post("/register", async (req, res) => {
         .catch((err) => res.status(400).json("Error: " + err));
     });
   });
-});
-router.get("/profile", auth, async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Max-Age", "1800");
@@ -62,14 +53,14 @@ router.get("/profile", auth, async (req, res) => {
     "Access-Control-Allow-Methods",
     "PUT, POST, GET, DELETE, PATCH, OPTIONS"
   );
+});
+router.get("/profile", auth, async (req, res) => {
   const user = await User.findById(req.user._id);
   res.json({
     id: user._id,
     name: user.name,
     date: user.date,
   });
-});
-router.delete("/profile", auth, (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Max-Age", "1800");
@@ -78,11 +69,12 @@ router.delete("/profile", auth, (req, res) => {
     "Access-Control-Allow-Methods",
     "PUT, POST, GET, DELETE, PATCH, OPTIONS"
   );
+});
+router.delete("/profile", auth, (req, res) => {
   User.findByIdAndDelete(req.user._id)
     .then(() => res.json("User deleted"))
     .catch((err) => res.status(400).json("Error: " + err));
-});
-router.delete("/:id", (req, res) => {
+
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Max-Age", "1800");
@@ -91,11 +83,11 @@ router.delete("/:id", (req, res) => {
     "Access-Control-Allow-Methods",
     "PUT, POST, GET, DELETE, PATCH, OPTIONS"
   );
+});
+router.delete("/:id", (req, res) => {
   User.findByIdAndDelete(req.params.id)
     .then(() => res.json("User deleted"))
     .catch((err) => res.status(400).json("Error: " + err));
-});
-router.get("/login", (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Max-Age", "1800");
@@ -104,18 +96,21 @@ router.get("/login", (req, res) => {
     "Access-Control-Allow-Methods",
     "PUT, POST, GET, DELETE, PATCH, OPTIONS"
   );
+});
+router.get("/login", (req, res) => {
   res.send("GET Login");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Max-Age", "1800");
+  res.setHeader("Access-Control-Allow-Headers", "content-type");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "PUT, POST, GET, DELETE, PATCH, OPTIONS"
+  );
 });
 router.post("/login", async (req, res) => {
   //validation
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Max-Age", "1800");
-  res.setHeader("Access-Control-Allow-Headers", "content-type");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "PUT, POST, GET, DELETE, PATCH, OPTIONS"
-  );
+
   if (!req.body.name || !req.body.password) {
     return res.status(400).json({ msg: "Please enter all fields" });
   }
@@ -139,8 +134,6 @@ router.post("/login", async (req, res) => {
       });
     }
   });
-});
-router.post("/tokenIsValid", async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Max-Age", "1800");
@@ -149,6 +142,8 @@ router.post("/tokenIsValid", async (req, res) => {
     "Access-Control-Allow-Methods",
     "PUT, POST, GET, DELETE, PATCH, OPTIONS"
   );
+});
+router.post("/tokenIsValid", async (req, res) => {
   try {
     const token = req.header("auth-token");
     if (!token) {
@@ -169,6 +164,14 @@ router.post("/tokenIsValid", async (req, res) => {
   } catch {
     res.status(500).json({ msg: err.message });
   }
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Max-Age", "1800");
+  res.setHeader("Access-Control-Allow-Headers", "content-type");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "PUT, POST, GET, DELETE, PATCH, OPTIONS"
+  );
 });
 
 module.exports = router;

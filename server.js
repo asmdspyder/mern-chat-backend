@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 const app = express();
-const server = require("https").createServer(app);
+const server = require("http").createServer(app);
 
 const io = require("socket.io")(server);
 const port = process.env.PORT || 5000;
@@ -24,15 +24,6 @@ db.once("open", () => console.log("Connected to DB!"));
 app.use(express.json());
 
 app.post("/sendmail", (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Max-Age", "1800");
-  res.setHeader("Access-Control-Allow-Headers", "content-type");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "PUT, POST, GET, DELETE, PATCH, OPTIONS"
-  );
-
   const { email } = req.body;
   try {
     const transporter = nodemailer.createTransport({
@@ -59,6 +50,14 @@ app.post("/sendmail", (req, res) => {
   } catch (error) {
     res.status(201).json({ status: 201, info });
   }
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Max-Age", "1800");
+  res.setHeader("Access-Control-Allow-Headers", "content-type");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "PUT, POST, GET, DELETE, PATCH, OPTIONS"
+  );
 });
 
 app.use("/api/users", usersRouter);
