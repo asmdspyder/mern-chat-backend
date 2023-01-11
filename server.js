@@ -1,8 +1,9 @@
 const express = require("express");
+const cors = require("cors");
 require("dotenv").config();
 const app = express();
 const server = require("https").createServer(app);
-const cors = require("cors");
+
 const io = require("socket.io")(server);
 const port = process.env.PORT || 5000;
 const mongoose = require("mongoose");
@@ -10,7 +11,11 @@ const nodemailer = require("nodemailer");
 
 const usersRouter = require("./routes/users");
 const path = require("path");
-app.use(cors({ origin: "*" }));
+app.use(
+  cors({
+    origin: "https://mern-chat-app-kwtb.onrender.com",
+  })
+);
 
 mongoose.connect(process.env.DB_URI, {
   useNewUrlParser: true,
