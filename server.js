@@ -11,11 +11,7 @@ const nodemailer = require("nodemailer");
 
 const usersRouter = require("./routes/users");
 const path = require("path");
-app.use(
-  cors({
-    origin: "https://mern-chat-app-kwtb.onrender.com",
-  })
-);
+app.use(cors());
 
 mongoose.connect(process.env.DB_URI, {
   useNewUrlParser: true,
