@@ -3,12 +3,7 @@ require("dotenv").config();
 const app = express();
 const server = require("https").createServer(app);
 const cors = require("cors");
-const io = require("socket.io")(server, {
-  cors: {
-    origin: "*",
-    methods: ["GET", "POST"],
-  },
-});
+const io = require("socket.io")(server);
 const port = process.env.PORT || 5000;
 const mongoose = require("mongoose");
 const nodemailer = require("nodemailer");
