@@ -2,11 +2,10 @@ const express = require("express");
 require("dotenv").config();
 const app = express();
 const server = require("https").createServer(app);
-console.log(server);
 const cors = require("cors");
 const io = require("socket.io")(server, {
   cors: {
-    origin: "https://mern-chat-app-kwtb.onrender.com",
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });
