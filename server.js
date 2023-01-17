@@ -1,11 +1,13 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
+const port = process.env.PORT || 5000;
 const app = express();
-const server = require("http").createServer(app);
+const server = require("http").Server(app);
+console.log(server);
 
 const io = require("socket.io")(server);
-const port = process.env.PORT || 5000;
+
 const mongoose = require("mongoose");
 const nodemailer = require("nodemailer");
 
